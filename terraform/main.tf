@@ -48,7 +48,7 @@ resource "aws_security_group" "sg_grafana" {
 }
 
 resource "aws_instance" "app_server" {
-  ami           = "ami-0c58f2cc399c7d70e"
+  ami           = "ami-096f72c5179d76044"
   instance_type = "t2.micro"
   key_name = "AWS"
  
