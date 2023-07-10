@@ -12,6 +12,14 @@ resource "aws_s3_bucket" "packer_manifest" {
   }
 }
 
+resource "aws_s3_bucket_ownership_controls" "s3_bucket_ownership_controls" {
+  bucket = aws_s3_bucket.packer_manifest.id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
 ####################################################
 # S3 Bucket ACL Packer Network
 ####################################################
