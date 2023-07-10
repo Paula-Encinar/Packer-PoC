@@ -6,7 +6,7 @@ variable "instance_name" {
 
 variable "region" {
     description = "Default region"
-    default = "us-west-2"
+    default = "eu-west-2"
 }
 # variable "packer_ami_id" {
 #   description = "Packer Builded AMI"

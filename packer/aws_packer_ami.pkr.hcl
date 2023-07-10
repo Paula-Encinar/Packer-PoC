@@ -8,7 +8,7 @@ packer {
 }
 
 data "amazon-ami" "ubuntu-focal-west" {
-  region = "us-west-2"
+  region = "eu-west-2"
   filters = {
     name                = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
     root-device-type    = "ebs"
@@ -21,7 +21,7 @@ data "amazon-ami" "ubuntu-focal-west" {
 source "amazon-ebs" "base_west" {
   ami_name      = "packer-aws-image"
   instance_type = "t2.micro"
-  region        = "us-west-2"
+  region        = "eu-west-2"
   source_ami    = data.amazon-ami.ubuntu-focal-west.id
   ssh_username  = "ubuntu"
 }
