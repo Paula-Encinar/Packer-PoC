@@ -21,9 +21,18 @@ resource "aws_security_group" "sg_grafana" {
   }
 
     ingress {
-    description      = "HTTP from VPC"
+    description      = "grafana port"
     from_port        = 3000
     to_port          = 3000
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+      ingress {
+    description      = "prometheus port"
+    from_port        = 9090
+    to_port          = 9090
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
