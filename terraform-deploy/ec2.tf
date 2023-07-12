@@ -34,9 +34,9 @@ resource "aws_security_group" "sg_grafana" {
 }
 
 resource "aws_instance" "app_server" {
-  ami           = "ami-096f72c5179d76044"
+  ami           = var.packer_ami_id
   instance_type = "t2.micro"
-  key_name = "AWS"
+  key_name = "paulalab"
  
   vpc_security_group_ids = [
     aws_security_group.sg_grafana.id

@@ -8,7 +8,8 @@ variable "region" {
     description = "Default region"
     default = "eu-west-2"
 }
-# variable "packer_ami_id" {
-#   description = "Packer Builded AMI"
-#   type        = string
-# }
+
+variable "packer_ami_id" {
+  description = "Packer Builded AMI"
+  type        = string
+}

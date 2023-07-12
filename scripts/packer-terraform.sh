@@ -16,8 +16,8 @@ case "$1" in
       echo ""
 
       echo "terraform apply => packer network infrastructure"
-      cd $terranetworkpath && terraform apply --auto-approve
-      echo ""
+      cd $terranetworkpath && terraform apply --auto-approve || true 
+      echo $?
 
       echo "initialize packer config"
       cd $packerhclpath && packer init $packerhclfilename
@@ -47,7 +47,7 @@ case "$1" in
       echo ""
 
       echo "Change AMI variable to Deploy"
-      sed -i '/packer_ami_id/s/.*/packer_ami_id="'$AMI_ID'"/' $terradeploypath/terraform.tfvars
+      sed -i "" '/packer_ami_id/s/.*/packer_ami_id="'$AMI_ID'"/' $terradeploypath/terraform.tfvars
       echo ""
       
       echo "terraform init => packer deploy infrastructure"

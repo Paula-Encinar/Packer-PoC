@@ -1,7 +1,3 @@
-####################################################
-# S3 Bucket tfstate packer network
-####################################################
-
 resource "aws_s3_bucket" "packer_manifest" {
   bucket = "packer-manifest"
   force_destroy = true
@@ -20,19 +16,6 @@ resource "aws_s3_bucket_ownership_controls" "s3_bucket_ownership_controls" {
   }
 }
 
-####################################################
-# S3 Bucket ACL Packer Network
-####################################################
-
-resource "aws_s3_bucket_acl" "packer_manifest" {
-  bucket = aws_s3_bucket.packer_manifest.id
-  acl    = "private"
-}
-
-####################################################
-# Define Bucket Encryption
-####################################################
-
 resource "aws_s3_bucket_server_side_encryption_configuration" "packer_manifest" {
   bucket = aws_s3_bucket.packer_manifest.bucket
   rule {
@@ -41,10 +24,6 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "packer_manifest" 
     }
   }
 }
-
-####################################################
-# Enable S3 Bucket Versioning
-####################################################
 
 resource "aws_s3_bucket_versioning" "packer_manifest" {
   bucket = aws_s3_bucket.packer_manifest.id
