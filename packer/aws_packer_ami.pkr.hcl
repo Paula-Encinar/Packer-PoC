@@ -50,11 +50,12 @@ build {
       "rm /home/ubuntu/grafana.sh",
     ]
   }
+  
 
   post-processor "manifest" {
     output = "packer_manifest.json"
   }
-  }
+}
 
 
 
