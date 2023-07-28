@@ -55,9 +55,9 @@ jobs:
             ./packer-terraform.sh destroy
         shell: bash
 
-      - name: Init script packer-terraform.sh
-        id: init_script
-        run: |
-            chmod +x packer-terraform.sh
-            ./packer-terraform.sh all
-        shell: bash
+      # - name: Init script packer-terraform.sh
+      #   id: init_script
+      #   run: |
+      #       chmod +x packer-terraform.sh
+      #       ./packer-terraform.sh all
+      #   shell: bash
