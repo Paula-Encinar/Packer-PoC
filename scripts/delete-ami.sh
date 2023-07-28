@@ -24,7 +24,7 @@ echo ""
 
 #remove all the snapshots associated with that AMI
 echo "Remove all the snapshots...."
-for SNAPSHOT in $Snap; do aws ec2 delete-snapshot --region eu-west-1 --snapshot-id $SNAPSHOT; done
+for SNAPSHOT in $Snap; do aws ec2 delete-snapshot --region eu-west-2 --snapshot-id $SNAPSHOT; done
 if [ $? -eq 0 ]; then
     echo "Done."
 else

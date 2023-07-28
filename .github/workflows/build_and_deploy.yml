@@ -48,6 +48,13 @@ jobs:
             echo "${HOME}/.local/bin" >> $GITHUB_PATH
         shell: bash    
 
+      - name: destroy terraform config
+        id: destroy_terraform
+        run: |
+            chmod +x packer-terraform.sh
+            ./packer-terraform.sh destroy
+        shell: bash
+
       - name: Init script packer-terraform.sh
         id: init_script
         run: |
