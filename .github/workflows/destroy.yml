@@ -1,16 +1,21 @@
-name: Terraform and Packer AWS Automation Deploy
+name: Terraform and Packer AWS Automation Destroy
 
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      dir:
+        description: 'Resources to be destroyed'
+        required: false
+        
+
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   ARGS: "-av"
 
 jobs:
-   packer_terraform:
-    name: 'packer_terraform'
+   packer_terraform_destroy:
+    name: 'packer_terraform_destroy'
     runs-on: ubuntu-latest
     env:
       TF_WORKING_DIR: './scripts'
@@ -48,9 +53,9 @@ jobs:
             echo "${HOME}/.local/bin" >> $GITHUB_PATH
         shell: bash    
 
-      - name: Init script packer-terraform.sh
+      - name: Init script terraform-packer-aws.sh
         id: init_script
         run: |
-            chmod +x packer-terraform.sh
-            ./packer-terraform.sh all
+            chmod +x terraform-packer-aws.sh 
+            ./terraform-packer-aws.sh destroy
         shell: bash
