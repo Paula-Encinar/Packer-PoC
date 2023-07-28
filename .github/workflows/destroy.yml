@@ -1,4 +1,4 @@
-name: Terraform and Packer AWS Automation Destroy
+name: Destroy Terraform and Packer AWS Automation 
 
 on:
   workflow_dispatch:
@@ -53,9 +53,9 @@ jobs:
             echo "${HOME}/.local/bin" >> $GITHUB_PATH
         shell: bash    
 
-      - name: Init script terraform-packer-aws.sh
+      - name: Init script packer-terraform.sh
         id: init_script
         run: |
-            chmod +x terraform-packer-aws.sh 
-            ./terraform-packer-aws.sh destroy
+            chmod +x packer-terraform.sh 
+            ./packer-terraform.sh destroy
         shell: bash

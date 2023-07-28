@@ -1,4 +1,4 @@
-name: Terraform and Packer AWS Automation Deploy
+name: Deploy Terraform and Packer AWS Automation
 
 on:
   push:
