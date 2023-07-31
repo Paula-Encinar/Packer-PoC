@@ -50,13 +50,13 @@ case "$1" in
       sed -i '/packer_ami_id/s/.*/packer_ami_id="'$AMI_ID'"/' $terradeploypath/terraform.tfvars
       echo ""
       
-      echo "terraform init => packer deploy infrastructure"
-      cd $terradeploypath && terraform init  -backend-config="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" \
-      -backend-config="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"      
-      echo ""
+      # echo "terraform init => packer deploy infrastructure"
+      # cd $terradeploypath && terraform init  -backend-config="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" \
+      # -backend-config="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"      
+      # echo ""
 
-      echo "terraform apply => packer deploy infrastructure"
-      cd $terradeploypath && terraform apply --auto-approve
+      # echo "terraform apply => packer deploy infrastructure"
+      # cd $terradeploypath && terraform apply --auto-approve
 
       if [ $? -eq 0 ]; then
         echo ""
