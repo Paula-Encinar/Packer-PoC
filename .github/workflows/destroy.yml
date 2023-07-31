@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TF_WORKING_DIR: './scripts'
+      TF_TERRAFORM_DIR: './terraform-deploy'
 
     defaults:
       run:
@@ -51,7 +52,27 @@ jobs:
             wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 -O ${HOME}/.local/bin/jq
             chmod +x ${HOME}/.local/bin/jq
             echo "${HOME}/.local/bin" >> $GITHUB_PATH
-        shell: bash    
+        shell: bash 
+
+      - name: Terraform Init
+        id: init
+        run: |
+          cd ../${{ env.TF_TERRAFORM_DIR }}
+          terraform init -backend-config="access_key=${AWS_ACCESS_KEY_ID}" \
+            -backend-config="secret_key=${AWS_SECRET_ACCESS_KEY}" \
+            -input=false -no-color
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      # Add a new step for Terraform Destroy
+      - name: Terraform Destroy
+        run: |
+          cd ../${{ env.TF_TERRAFORM_DIR }}
+          terraform destroy -auto-approve
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}   
 
       - name: Init script packer-terraform.sh
         id: init_script
