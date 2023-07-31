@@ -94,11 +94,11 @@ case "$1" in
       cd $terranetworkpath && terraform destroy --auto-approve
       echo ""
 
-      echo "terraform reconfigure => packer deploy infrastructure"
-      cd $terradeploypath && terraform init -reconfigure
+      # echo "terraform reconfigure => packer deploy infrastructure"
+      # cd $terradeploypath && terraform init -reconfigure
 
-      echo "terraform destroy => packer deploy infrastructure"
-      cd $terradeploypath && terraform destroy --auto-approve
+      # echo "terraform destroy => packer deploy infrastructure"
+      # cd $terradeploypath && terraform destroy --auto-approve
 
       if [ $? -eq 0 ]; then
         echo ""
