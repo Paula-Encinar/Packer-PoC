@@ -51,7 +51,8 @@ case "$1" in
       echo ""
       
       echo "terraform init => packer deploy infrastructure"
-      cd $terradeploypath && terraform init      
+      cd $terradeploypath && terraform init  -backend-config="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" \
+      -backend-config="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"      
       echo ""
 
       echo "terraform apply => packer deploy infrastructure"

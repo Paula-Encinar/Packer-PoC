@@ -13,10 +13,3 @@ variable "packer_ami_id" {
   description = "Packer Builded AMI"
   type        = string
 }
-
-variable "AWS_ACCESS_KEY_ID" {
-  sensitive = true
-}
-variable "AWS_SECRET_ACCESS_KEY" {
-  sensitive = true
-}
