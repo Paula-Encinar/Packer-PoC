@@ -58,7 +58,7 @@ jobs:
       - name: Terraform bucket Init
         id: init_bucket
         run: |
-          cd ../${{ env.F_TERRAFORM_BUCKET_DIR  }}
+          cd ../${{ env.TF_TERRAFORM_BUCKET_DIR  }}
           terraform init -backend-config="access_key=${AWS_ACCESS_KEY_ID}" \
             -backend-config="secret_key=${AWS_SECRET_ACCESS_KEY}" \
             -input=false -no-color
