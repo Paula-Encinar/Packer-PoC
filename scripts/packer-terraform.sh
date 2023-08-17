@@ -11,13 +11,13 @@ packerhclfilename="aws_packer_ami.pkr.hcl"
 case "$1" in
   all)
 
-      echo "terraform init => packer network infrastructure"
-      cd $terranetworkpath && terraform init      
-      echo ""
+      # echo "terraform init => packer network infrastructure"
+      # cd $terranetworkpath && terraform init      
+      # echo ""
 
-      echo "terraform apply => packer network infrastructure"
-      cd $terranetworkpath && terraform apply --auto-approve || true 
-      echo $?
+      # echo "terraform apply => packer network infrastructure"
+      # cd $terranetworkpath && terraform apply --auto-approve || true 
+      # echo $?
 
       echo "initialize packer config"
       cd $packerhclpath && packer init $packerhclfilename

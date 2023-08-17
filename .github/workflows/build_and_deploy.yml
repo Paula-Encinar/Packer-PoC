@@ -16,6 +16,7 @@ jobs:
     env:
       TF_WORKING_DIR: './scripts'
       TF_TERRAFORM_DIR: './terraform-deploy'
+      TF_TERRAFORM_BUCKET_DIR: './terraform-bucket'
 
     defaults:
       run:
@@ -51,6 +52,18 @@ jobs:
           echo "${HOME}/.local/bin" >> $GITHUB_PATH
         shell: bash    
 
+      - name: Terraform bucket Apply
+        id: apply
+        run: |
+          cd ../${{ env.TF_TERRAFORM_BUCKET_DIR }}
+          terraform init -backend-config="access_key=${AWS_ACCESS_KEY_ID}" \
+            -backend-config="secret_key=${AWS_SECRET_ACCESS_KEY}" \
+            -input=false -no-color
+          terraform apply -auto-approve
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       - name: Init script packer-terraform.sh
         id: init_script
         run: |
@@ -58,8 +71,8 @@ jobs:
           ./packer-terraform.sh all
         shell: bash
 
-      - name: Terraform Init
-        id: init
+      - name: Terraform deploy Apply
+        id: apply
         run: |
           cd ../${{ env.TF_TERRAFORM_DIR }}
           terraform init -backend-config="access_key=${AWS_ACCESS_KEY_ID}" \
