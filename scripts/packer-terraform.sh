@@ -70,15 +70,6 @@ case "$1" in
       ./delete-ami.sh $AMI_ID
       echo "" 
 
-      # echo "terraform reconfigure => packer network infrastructure"
-      # cd $terranetworkpath && terraform init -reconfigure
-      # echo ""
-
-      # echo "terraform destroy => packer network infrastructure"
-      # cd $terranetworkpath && terraform destroy --auto-approve
-      # echo ""
-
-
       if [ $? -eq 0 ]; then
         echo ""
         echo "##########################################"
