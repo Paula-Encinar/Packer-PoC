@@ -56,7 +56,7 @@ jobs:
         shell: bash 
 
       - name: Terraform bucket Init
-        id: init bucket
+        id: init_bucket
         run: |
           cd ../${{ env.TF_TERRAFORM_DIR }}
           terraform init -backend-config="access_key=${AWS_ACCESS_KEY_ID}" \
@@ -76,7 +76,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}   
 
       - name: Terraform deploy Init
-        id: init deploy
+        id: init_deploy
         run: |
           cd ../${{ env.TF_TERRAFORM_BUCKET_DIR }}
           terraform init -backend-config="access_key=${AWS_ACCESS_KEY_ID}" \
