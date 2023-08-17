@@ -11,14 +11,6 @@ packerhclfilename="aws_packer_ami.pkr.hcl"
 case "$1" in
   all)
 
-      # echo "terraform init => packer network infrastructure"
-      # cd $terranetworkpath && terraform init      
-      # echo ""
-
-      # echo "terraform apply => packer network infrastructure"
-      # cd $terranetworkpath && terraform apply --auto-approve || true 
-      # echo $?
-
       echo "initialize packer config"
       cd $packerhclpath && packer init $packerhclfilename
 
@@ -49,14 +41,6 @@ case "$1" in
       echo "Change AMI variable to Deploy"
       sed -i '/packer_ami_id/s/.*/packer_ami_id="'$AMI_ID'"/' $terradeploypath/terraform.tfvars
       echo ""
-      
-      # echo "terraform init => packer deploy infrastructure"
-      # cd $terradeploypath && terraform init  -backend-config="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" \
-      # -backend-config="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"      
-      # echo ""
-
-      # echo "terraform apply => packer deploy infrastructure"
-      # cd $terradeploypath && terraform apply --auto-approve
 
       if [ $? -eq 0 ]; then
         echo ""
@@ -86,19 +70,14 @@ case "$1" in
       ./delete-ami.sh $AMI_ID
       echo "" 
 
-      echo "terraform reconfigure => packer network infrastructure"
-      cd $terranetworkpath && terraform init -reconfigure
-      echo ""
+      # echo "terraform reconfigure => packer network infrastructure"
+      # cd $terranetworkpath && terraform init -reconfigure
+      # echo ""
 
-      echo "terraform destroy => packer network infrastructure"
-      cd $terranetworkpath && terraform destroy --auto-approve
-      echo ""
+      # echo "terraform destroy => packer network infrastructure"
+      # cd $terranetworkpath && terraform destroy --auto-approve
+      # echo ""
 
-      # echo "terraform reconfigure => packer deploy infrastructure"
-      # cd $terradeploypath && terraform init -reconfigure
-
-      # echo "terraform destroy => packer deploy infrastructure"
-      # cd $terradeploypath && terraform destroy --auto-approve
 
       if [ $? -eq 0 ]; then
         echo ""

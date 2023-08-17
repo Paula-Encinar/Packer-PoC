@@ -55,26 +55,6 @@ jobs:
             echo "${HOME}/.local/bin" >> $GITHUB_PATH
         shell: bash 
 
-      - name: Terraform bucket Init
-        id: init_bucket
-        run: |
-          cd ../${{ env.TF_TERRAFORM_BUCKET_DIR }}
-          terraform init -backend-config="access_key=${AWS_ACCESS_KEY_ID}" \
-            -backend-config="secret_key=${AWS_SECRET_ACCESS_KEY}" \
-            -input=false -no-color
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      # Add a new step for Terraform Destroy
-      - name: Terraform bucket Destroy
-        run: |
-          cd ../${{ env.TF_TERRAFORM_BUCKET_DIR }}
-          terraform destroy -auto-approve
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}   
-
       - name: Terraform deploy Init
         id: init_deploy
         run: |
@@ -101,3 +81,23 @@ jobs:
             chmod +x packer-terraform.sh 
             ./packer-terraform.sh destroy
         shell: bash
+
+      - name: Terraform bucket Init
+        id: init_bucket
+        run: |
+          cd ../${{ env.TF_TERRAFORM_BUCKET_DIR }}
+          terraform init -backend-config="access_key=${AWS_ACCESS_KEY_ID}" \
+            -backend-config="secret_key=${AWS_SECRET_ACCESS_KEY}" \
+            -input=false -no-color
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      # Add a new step for Terraform Destroy
+      - name: Terraform bucket Destroy
+        run: |
+          cd ../${{ env.TF_TERRAFORM_BUCKET_DIR }}
+          terraform destroy -auto-approve
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}   
