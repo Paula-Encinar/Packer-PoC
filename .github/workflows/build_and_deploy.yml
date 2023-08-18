@@ -17,6 +17,8 @@ jobs:
       TF_WORKING_DIR: './scripts'
       TF_TERRAFORM_DIR: './terraform-deploy'
       TF_TERRAFORM_BUCKET_DIR: './terraform-bucket'
+      TF_PACKER_DIR: './packer'
+      TF_PACKER_CONFIG_FILE: './packer/aws_packer_ami.pkr.hcl'
 
     defaults:
       run:
@@ -64,11 +66,29 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Init script packer-terraform.sh
-        id: init_script
+      # - name: Init script packer-terraform.sh
+      #   id: init_script
+      #   run: |
+      #     chmod +x packer-terraform.sh
+      #     ./packer-terraform.sh all
+      #   shell: bash
+
+      - name: Packer Init
+        id: init_packer
         run: |
-          chmod +x packer-terraform.sh
-          ./packer-terraform.sh all
+          cd ../${{ env.TF_PACKER_DIR }}
+          packer init ${{ env.TF_PACKER_CONFIG_FILE }}
+          packer validate ${{ env.TF_PACKER_CONFIG_FILE }}
+        shell: bash
+
+      - name: Packer Build
+        id: build_packer
+        run: |
+          cd ../${{ env.TF_PACKER_DIR }}
+          packer build ${{ env.TF_PACKER_CONFIG_FILE }}
+          aws s3 cp ${{ env.TF_PACKER_DIR }}/packer_manifest.json  s3://packer-manifest/packer-manifest/packer_manifest.json
+          AMI_ID=$(cd $packerhclpath && jq -r '.builds[-1].artifact_id' packer_manifest.json | cut -d ":" -f2)
+          sed -i '/packer_ami_id/s/.*/packer_ami_id="'$AMI_ID'"/' ../${{ env.TF_TERRAFORM_DIR }}/terraform.tfvars
         shell: bash
 
       - name: Terraform deploy Apply
