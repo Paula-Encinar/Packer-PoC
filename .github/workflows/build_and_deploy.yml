@@ -18,7 +18,7 @@ jobs:
       TF_TERRAFORM_DIR: './terraform-deploy'
       TF_TERRAFORM_BUCKET_DIR: './terraform-bucket'
       TF_PACKER_DIR: './packer'
-      TF_PACKER_CONFIG_FILE: './packer/aws_packer_ami.pkr.hcl'
+      TF_PACKER_CONFIG_FILE: 'aws_packer_ami.pkr.hcl'
 
     defaults:
       run:
