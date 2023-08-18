@@ -14,7 +14,7 @@ jobs:
     name: 'packer_terraform'
     runs-on: ubuntu-latest
     env:
-      # TF_WORKING_DIR: './scripts'
+      TF_WORKING_DIR: './scripts'
       TF_TERRAFORM_DIR: './terraform-deploy'
       TF_TERRAFORM_BUCKET_DIR: './terraform-bucket'
       TF_PACKER_DIR: './packer'
@@ -23,7 +23,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        # working-directory: ${{ env.TF_WORKING_DIR }}
+        working-directory: ${{ env.TF_WORKING_DIR }}
 
     steps:
       - name: Checkout
