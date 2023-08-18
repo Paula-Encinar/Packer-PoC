@@ -66,13 +66,6 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      # - name: Init script packer-terraform.sh
-      #   id: init_script
-      #   run: |
-      #     chmod +x packer-terraform.sh
-      #     ./packer-terraform.sh all
-      #   shell: bash
-
       - name: Packer Init
         id: init_packer
         run: |
