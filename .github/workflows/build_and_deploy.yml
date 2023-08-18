@@ -86,8 +86,8 @@ jobs:
         run: |
           cd ../${{ env.TF_PACKER_DIR }}
           packer build ${{ env.TF_PACKER_CONFIG_FILE }}
-          aws s3 cp ${{ env.TF_PACKER_DIR }}/packer_manifest.json  s3://packer-manifest/packer-manifest/packer_manifest.json
-          AMI_ID=$(cd $packerhclpath && jq -r '.builds[-1].artifact_id' packer_manifest.json | cut -d ":" -f2)
+          aws s3 cp packer_manifest.json  s3://packer-manifest/packer-manifest/packer_manifest.json
+          AMI_ID=$(cd ../${{ env.TF_PACKER_DIR }} && jq -r '.builds[-1].artifact_id' packer_manifest.json | cut -d ":" -f2)
           sed -i '/packer_ami_id/s/.*/packer_ami_id="'$AMI_ID'"/' ../${{ env.TF_TERRAFORM_DIR }}/terraform.tfvars
         shell: bash
 
