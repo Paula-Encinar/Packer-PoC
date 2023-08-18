@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# sudo docker run -d -p 3000:3000 grafana/grafana
-# sudo docker run -d -p 9090:9090 prom/prometheus
-
-
 sudo yum update -y
 sudo yum install docker -y
 
