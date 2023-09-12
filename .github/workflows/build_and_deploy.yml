@@ -1,10 +1,18 @@
 name: Deploy Terraform and Packer AWS Automation
 
+
+# on:
+#   workflow_run:
+#     workflows: ["Destroy Terraform and Packer AWS Automation"]
+#     types:
+#       - completed
+
 on:
-  workflow_run:
-    workflows: ["Destroy Terraform and Packer AWS Automation"]
-    types:
-      - completed
+  workflow_dispatch: # Manually trigger the workflow
+    inputs:
+      dir:
+        description: 'Resources to be deployed'
+        required: false
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
