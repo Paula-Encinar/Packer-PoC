@@ -60,5 +60,18 @@ If you want to review the complete configuration of the provisioning file that P
 packer/packer-config.sh
 ```
 
+As you can see in the workflow of the previous section, Packer when it finishes creating the AMI stores in ouput a json file where you can get the ID of the new AMI, this file is stored in a S3 bucket and then copies this ID in the terraform.tfvars file to create later the EC2 instance with that AMI from a script that you can find in the following path: 
+
+```bash
+scripts/packer-terraform.sh
+```
+
+As you can see this script has two things of uses, the use case all, with which you perform the upload to the s3 bucket and get the new id of the AMI. On the other hand there is the destroy use case, which takes care of cleaning up both the newly created AMI and its snapshot in case the infrastructure is destroyed, but we'll talk about that later. 
+
+In case you want to run this script for any of the two cases manually for local testing you have to add to the run command the case you want to use, below you can see an example: 
+
+```bash
+./scripts/packer-terraform.sh all
+```
 
 
