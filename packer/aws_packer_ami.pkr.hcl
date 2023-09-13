@@ -7,17 +7,6 @@ packer {
   }
 }
 
-# data "amazon-ami" "ubuntu-focal-west" {
-#   region = "eu-west-2"
-#   filters = {
-#     name                = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
-#     root-device-type    = "ebs"
-#     virtualization-type = "hvm"
-#   }
-#   most_recent = true
-#   owners      = ["099720109477"]
-# }
-
 source "amazon-ebs" "base_west" {
   ami_name      = "packer-aws-image"
   instance_type = "t3.micro"
