@@ -13,9 +13,22 @@ This repository is a Proof of Concept in which we will use three tools mentioned
 - [Github actions](https://docs.github.com/en/actions) is an automation and continuous integration/continuous deployment (CI/CD) platform provided by GitHub. It allows developers to automate various tasks, workflows, and processes directly within their GitHub repositories. With GitHub Actions, you can build, test, and deploy your code, as well as perform other custom automation tasks, all in response to events and triggers like code pushes, pull requests, and more.
 - [Amazon Web Service (AWS)](https://aws.amazon.com/) is a comprehensive and widely used cloud computing platform provided by Amazon.com. It offers a broad set of cloud-based services, including virtual machine (EC2), storage (s3 bucket),networking, security, and more. AWS allows organizations to access and utilize these services over the internet, providing scalable, flexible, and cost-effective solutions for a wide range of IT needs.
 
+## Workflow
+
+The workflow of this PoC is as follows:
+
+
+```mermaid
+Flowchart LR
+A[Packer creates new AMI on AWS] --> B[an S3 bucket is created with Terraform]
+```
+
+
 ## PoC Overview and Usage 
 
 As I mentioned in the introduction, this is a proof of concept in which three main tools are used: Packer, Terraform and Github Actions, and Amazon Web Service (AWS) has been used as Cloud.
+
+First of all, all the steps mentioned below are performed through Github actions, nothing is executed manually! 
 
 First you have to decide on which Amazon Machine Image you want to build with Packer. To do this you need to log into AWS and choose an AMI, in this case an *ubuntu focal 20.04* has been chosen.
 
@@ -43,5 +56,5 @@ If you want to review the complete configuration of the provisioning file that P
 packer/packer-config.sh
 ```
 
-## Workflow
+
 
