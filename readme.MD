@@ -20,7 +20,7 @@ The workflow of this PoC is as follows:
 
 ```mermaid
 Flowchart LR
-A[Packer creates new AMI on AWS] --> B[an S3 bucket is created with Terraform]
+A[Packer creates new AMI on AWS] --> B(an S3 bucket is created with Terraform)
 ```
 
 
