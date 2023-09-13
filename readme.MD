@@ -20,9 +20,9 @@ The workflow of this PoC is as follows:
 
 ```mermaid
 flowchart TD
-A[Packer creates new AMI on AWS] --> B(an S3 bucket is created with Terraform)
-B --> C[Load output packer in S3 bucket]
-C --> D[Copy AMI id from output in s3 and add to terraform tfvars]
+A[Packer creates new AMI on AWS] --> B(An S3 bucket is created with Terraform)
+B --> C[Load output packer.json file in s3 bucket]
+C --> D[Copy AMI id from packer.json in s3 and add to terraform.tfvars file]
 D --> E[Terraform creates EC2 instance with AMI id]
 
 ```
@@ -30,9 +30,9 @@ D --> E[Terraform creates EC2 instance with AMI id]
 
 ## PoC Overview and Usage 
 
-As I mentioned in the introduction, this is a proof of concept in which three main tools are used: Packer, Terraform and Github Actions, and Amazon Web Service (AWS) has been used as Cloud.
+As I mentioned in the introduction, this is a proof of concept in which three main tools are used: Packer, Terraform and Github Actions, and Amazon Web Service (AWS) has been used as Cloud. 
 
-First of all, all the steps mentioned below are performed through Github actions, nothing is executed manually! 
+First of all, all the steps mentioned below in the workflow are performed through Github actions and bash script to raise and drop EC2 instances, s3 buckets and create and delete AMIs. Nothing is executed manually! 
 
 First you have to decide on which Amazon Machine Image you want to build with Packer. To do this you need to log into AWS and choose an AMI, in this case an *ubuntu focal 20.04* has been chosen.
 
