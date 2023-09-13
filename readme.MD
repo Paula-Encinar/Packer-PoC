@@ -19,7 +19,29 @@ As I mentioned in the introduction, this is a proof of concept in which three ma
 
 First you have to decide on which Amazon Machine Image you want to build with Packer. To do this you need to log into AWS and choose an AMI, in this case an *ubuntu focal 20.04* has been chosen.
 
-After selecting the AMI, Packer will build a custom AMI by provisioning it from a script in which this new AMI is configured so that when it is deployed to an EC2 instance it will have the expected configuration. The script has been done in bash and consists of installing and updating packages to build two Docker services which will be Grafana and Prometheus. 
+After selecting the AMI, Packer will build a custom AMI by provisioning it from a script in which this new AMI is configured so that when it is deployed to an EC2 instance it will have the expected configuration. The script has been done in bash and consists of installing and updating packages to build two Docker services which will be Grafana and Prometheus.Packer copies this file into the machine right into the path where every time a new machine is started with that AMI it will run that script. You can see it in this sample piece of code from my Packer file: 
+
+``` bash
+  provisioner "shell" {
+    inline = [
+      "sudo cp /home/ec2-user/packer-config.sh /var/lib/cloud/scripts/per-boot/packer-config.sh",
+      "sudo chmod +x /var/lib/cloud/scripts/per-boot/packer-config.sh",
+      "rm /home/ec2-user/packer-config.sh",
+    ]
+  }
+```
+
+If you want to check the complete configuration of the packer file you can find it here: 
+
+```bash
+packer/aws_packer_ami.pkr.hcl
+```
+
+If you want to review the complete configuration of the provisioning file that Packer uses, you can view it here: 
+
+```bash
+packer/packer-config.sh
+```
 
 ## Workflow
 
