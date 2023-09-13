@@ -19,8 +19,12 @@ The workflow of this PoC is as follows:
 
 
 ```mermaid
-Flowchart LR
+flowchart TD
 A[Packer creates new AMI on AWS] --> B(an S3 bucket is created with Terraform)
+B --> C[Load output packer in S3 bucket]
+C --> D[Copy AMI id from output in s3 and add to terraform tfvars]
+D --> E[Terraform creates EC2 instance with AMI id]
+
 ```
 
 
