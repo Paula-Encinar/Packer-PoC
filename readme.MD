@@ -1,12 +1,13 @@
 # Packer + Terraform + CI/CD PoC
 
-This repository is a Proof of Concept in which we will use three tools mentioned below to automate the creation of an EC2 instance in AWS from a customised AMI so that when the EC2 instance is started, a graphana service and a prometheus service are created from docker. 
+This repository is a Proof of Concept in which we will use three tools mentioned below to automate the creation of an EC2 instance in AWS from a customised AMI so that when the EC2 instance is started, a Grafana service and a Prometheus service are created from docker. 
 
 - [Tools used](#tools-used)
 - [Installation](#installation)
 - [Workflow](#workflow)
 - [Poc Overview](#poc-overview)
 - [Usage](#usage)
+- [Important](#important)
 
 ## Tools used 
 
@@ -153,7 +154,7 @@ resource "aws_security_group" "sg_ec2" {
     Name = "ec2 security group"
   }
 }
-``````
+```
 
 As you can see this script has two things of uses, the use case *all*, with which you perform the upload to the s3 bucket and get the new id of the AMI. On the other hand there is the *destroy* use case, which takes care of cleaning up both the newly created AMI and its snapshot in case the infrastructure is destroyed, but we'll talk about that later. 
 
@@ -200,5 +201,12 @@ Once it is clear how this infrastructure would be deployed or removed from workf
   ```
 
   ![image](/docs/github_aws_secret.png)
+
+
+Now it can be deployed thanks to all the tools used! GO FORWARD!
+
+## Important
+
+Try not to deploy different infrastructures before removing the previous one, the terraform state might forget to remove certain resources that can cost you extra on AWS.
 
 
