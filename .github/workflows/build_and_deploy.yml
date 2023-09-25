@@ -1,12 +1,5 @@
 name: Deploy Terraform and Packer AWS Automation
 
-
-# on:
-#   workflow_run:
-#     workflows: ["Destroy Terraform and Packer AWS Automation"]
-#     types:
-#       - completed
-
 on:
   workflow_dispatch: # Manually trigger the workflow
     inputs:

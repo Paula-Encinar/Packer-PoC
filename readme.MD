@@ -176,3 +176,29 @@ Both workflows have a workflow dispatch event trigger. This is triggered on the 
 ![image](/docs/workflow_dispatch.png)
 
 Once it is clear how this infrastructure would be deployed or removed from workflows, it must be clear whether these workflows need to receive any environment variables or secrets. In this case the following should be taken into account:
+
+- Environment variables: In order to execute the files related to Packer and Terraform and other scripts, environment variables have been created in the workflows to indicate where these files are located. Here is an example:
+
+  ```bash
+  jobs:
+    packer_terraform:
+      name: 'packer_terraform'
+      runs-on: ubuntu-latest
+      env:
+        TF_WORKING_DIR: './scripts'
+        TF_TERRAFORM_DIR: './terraform-deploy'
+        TF_TERRAFORM_BUCKET_DIR: './terraform-bucket'
+  ```
+
+- Secrets: In order to access AWS, the workflows need to have access to the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY. These are stored in Github secrets and are used in the workflows as follows:
+
+  ```bash
+  env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  ARGS: "-av"
+  ```
+
+  ![image](/docs/github_aws_secret.png)
+
+
