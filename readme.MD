@@ -98,6 +98,63 @@ Once the AMI is created, Packer stores the ID of the new AMI in a json file that
 scripts/packer-terraform.sh
 ```
 
+In addition to creating an EC2 instance, other resources needed to access the EC2 instance, such as networks and ports, are created. In addition, as two services run within the instance and are exposed on certain ports, a security group must be created to enable these ports. Below is an example of a security group where the ssh, grafana and prometheus ports are enabled in addition to the http port. 
+
+```bash 
+resource "aws_security_group" "sg_ec2" {
+  name        = "allow_ssh_http_grafana"
+  description = "Allow ssh http inbound traffic"
+
+  ingress {
+    description      = "SSH from VPC"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  ingress {
+    description      = "HTTP from VPC"
+    from_port        = 8080
+    to_port          = 8080
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+    ingress {
+    description      = "grafana port"
+    from_port        = 3000
+    to_port          = 3000
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+      ingress {
+    description      = "prometheus port"
+    from_port        = 9090
+    to_port          = 9090
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "ec2 security group"
+  }
+}
+``````
+
 As you can see this script has two things of uses, the use case *all*, with which you perform the upload to the s3 bucket and get the new id of the AMI. On the other hand there is the *destroy* use case, which takes care of cleaning up both the newly created AMI and its snapshot in case the infrastructure is destroyed, but we'll talk about that later. 
 
 In case you want to run this script for any of the two cases manually for local testing you have to add to the run command the case you want to use, below you can see an example: 
@@ -110,5 +167,6 @@ In case you want to run this script for any of the two cases manually for local 
 
 It is true that this proof of concept can be run manually, but this is not the purpose of it. The purpose of this PoC is to use Packer with Github actions. Therefore, the following will explain how to run it correctly.
 
+As can be seen in the following image, two workflows have been created. One to build the AMI and deploy with it a new EC2 instance which has two services (Grafana and Prometheus) provisioned when the instance is started. The second workflow is used to remove all the AWS infrastructure created with the first workflow, both the AMI, its snapshot, the EC2 instance and the network and port configuration used.  
 
 ![image](/docs/github_workflows.png)
