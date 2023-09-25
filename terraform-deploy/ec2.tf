@@ -1,4 +1,4 @@
-resource "aws_security_group" "sg_grafana" {
+resource "aws_security_group" "sg_ec2" {
   name        = "allow_ssh_http_grafana"
   description = "Allow ssh http inbound traffic"
 
@@ -47,7 +47,7 @@ resource "aws_security_group" "sg_grafana" {
   }
 
   tags = {
-    Name = "allow_ssh_http_grafana"
+    Name = "ec2 security group"
   }
 }
 
