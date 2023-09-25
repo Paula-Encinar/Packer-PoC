@@ -170,3 +170,9 @@ It is true that this proof of concept can be run manually, but this is not the p
 As can be seen in the following image, two workflows have been created. One to build the AMI and deploy with it a new EC2 instance which has two services (Grafana and Prometheus) provisioned when the instance is started. The second workflow is used to remove all the AWS infrastructure created with the first workflow, both the AMI, its snapshot, the EC2 instance and the network and port configuration used.  
 
 ![image](/docs/github_workflows.png)
+
+Both workflows have a workflow dispatch event trigger. This is triggered on the branch you want to execute. It is possible to modify the workflows so that they are triggered when you push to master, but in this case it is preferable that this step is done manually so as not to raise different infrastructures at the same time and lose control of their state. 
+
+![image](/docs/workflow_dispatch.png)
+
+Once it is clear how this infrastructure would be deployed or removed from workflows, it must be clear whether these workflows need to receive any environment variables or secrets. In this case the following should be taken into account:
