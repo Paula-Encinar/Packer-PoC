@@ -4,8 +4,9 @@ This repository is a Proof of Concept in which we will use three tools mentioned
 
 - [Tools used](#tools-used)
 - [Installation](#installation)
-- [Poc Overview and Usage](#poc-overview-and-usage)
 - [Workflow](#workflow)
+- [Poc Overview](#poc-overview)
+- [Usage](#usage)
 
 ## Tools used 
 
@@ -58,7 +59,7 @@ D --> E[Terraform creates EC2 instance with AMI id]
 ```
 
 
-## PoC Overview and Usage 
+## PoC Overview
 
 As I mentioned in the introduction, this is a proof of concept in which three main tools are used: Packer, Terraform and Github Actions, and Amazon Web Service (AWS) has been used as Cloud. 
 
@@ -89,14 +90,15 @@ If you want to review the complete configuration of the provisioning file that P
 ```bash
 packer/packer-config.sh
 ```
+As you can see in the file above, the provisioning of the Amazon Image consists of raising two docker services, a [Grafana](https://grafana.com/) and a [Prometheus](https://prometheus.io/). These are monitoring services, in this case the installation is simple but you can add any configuration you want. 
 
-As you can see in the workflow of the previous section, Packer when it finishes creating the AMI stores in ouput a json file where you can get the ID of the new AMI, this file is stored in a S3 bucket and then copies this ID in the terraform.tfvars file to create later the EC2 instance with that AMI from a script that you can find in the following path: 
+Once the AMI is created, Packer stores the ID of the new AMI in a json file that is stored in a S3 bucket. This file is used by Terraform to create the EC2 instance with the new AMIv from a script that you can find in the following path: 
 
 ```bash
 scripts/packer-terraform.sh
 ```
 
-As you can see this script has two things of uses, the use case all, with which you perform the upload to the s3 bucket and get the new id of the AMI. On the other hand there is the destroy use case, which takes care of cleaning up both the newly created AMI and its snapshot in case the infrastructure is destroyed, but we'll talk about that later. 
+As you can see this script has two things of uses, the use case *all*, with which you perform the upload to the s3 bucket and get the new id of the AMI. On the other hand there is the *destroy* use case, which takes care of cleaning up both the newly created AMI and its snapshot in case the infrastructure is destroyed, but we'll talk about that later. 
 
 In case you want to run this script for any of the two cases manually for local testing you have to add to the run command the case you want to use, below you can see an example: 
 
@@ -104,4 +106,9 @@ In case you want to run this script for any of the two cases manually for local 
 ./scripts/packer-terraform.sh all
 ```
 
+## Usage
 
+It is true that this proof of concept can be run manually, but this is not the purpose of it. The purpose of this PoC is to use Packer with Github actions. Therefore, the following will explain how to run it correctly.
+
+
+![image](/docs/github_workflows.png)
